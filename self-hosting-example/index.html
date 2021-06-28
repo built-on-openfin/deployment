@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>TEMPLATE</title>
+    </head>
+    <body>
+        <div id='version'></div>
+        <script>
+            fin.desktop.System.getVersion(version => {
+                let versionDiv = document.getElementById('version');
+                versionDiv.innerText = `You are currently on Version ${version}`
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "self-hosting-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "oflaunch": "node openfin.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2",
+    "openfin-launcher": "^1.3.12"
+  }
+}
