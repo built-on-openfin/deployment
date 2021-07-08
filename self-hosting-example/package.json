@@ -4,13 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "oflaunch": "node openfin.js"
+    "launch": "start http://localhost:5555/launch"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
-    "express": "^4.16.2",
-    "openfin-launcher": "^1.3.12"
+    "express": "^4.16.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/built-on-openfin/deployment.git"
   }
 }
