@@ -37,14 +37,16 @@ Overwrite all applications in the Window registry
 `Type: REG_SZ`  
 `Data: http://assetServerUrl`
 
-Where http://assetServerUrl is the url of your hosted assets.
+Where http://assetServerUrl is the url of your hosted assets e.g. http://localhost:5555/ for this sample.
 
 ## Demo
 
-This repository includes a sample app which targets a custom _legacy_ release channel, a sample channel specific to this project. The assets url is configured in the sample [app.json](https://github.com/openfin/hosting-demo/blob/master/app.json#L14) included in this project. To launch the sample application:
+This repository includes a sample app which targets a custom version which is fetched from the custom asset location.
+
+To launch the sample application load the launch page in the browser using the command below and then click on the fins link to launch the application:
 
 ```bash
-npm run oflaunch
+npm run launch
 ```
 
 The application dynamically populates a div with its current OpenFin version, as a number.
