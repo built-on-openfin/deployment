@@ -18,7 +18,7 @@
     },
     "homepage": "https://github.com/openfin/platform-api-project-seed.git/examples/deployment-health-check#readme",
     "dependencies": {
-        "@openfin/deployment": "1.0.1-beta.3"
+        "@openfin/deployment": "1.0.2"
     },
     "devDependencies": {
         "copy-webpack-plugin": "^10.2.4",
