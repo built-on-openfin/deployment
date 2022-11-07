@@ -31,13 +31,17 @@ To deploy your own, simply copy the public directory (or its structure) and host
 
 ## Step 2: Point To Your Assets
 
-Overwrite all applications in the Window registry  
-`HKEY_CURRENT_USER -> SOFTWARE -> OpenFin -> RVM -> Settings`  
-`Name: assetsUrl`  
-`Type: REG_SZ`  
-`Data: http://assetServerUrl`
+`Please set a DOS file in your registry to point to a assetsUrl` - https://developers.openfin.co/of-docs/docs/desktop-owner-settings  
+`Path: HKEY_LOCAL_MACHINE\Software\OpenFin\RVM\Settings\`  
+`Type: REG_SZ (String value)`  
+`Name: DesktopOwnerSettings`  
+`Data: https://example.com/company/files/end-user-desktop-owner-settings.json`
 
-Where http://assetServerUrl is the url of your hosted assets e.g. http://localhost:5555/ for this sample.
+Example DOS: 
+
+
+    "desktopSettings": {
+        "assetsUrl": "http://localhost:8000/",
 
 ## Demo
 
