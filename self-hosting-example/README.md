@@ -3,7 +3,6 @@
 ### Directory Structure
 
 /  
-&nbsp;&nbsp;&nbsp;&nbsp;runtimeVersions *(static file containing hosted runtimes)*  
 &nbsp;&nbsp;&nbsp;&nbsp;/rvm  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;latestVersion *(static file containing latest RVM Version)*  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;latest *(latest RVM - 8.1.0.4)*  
