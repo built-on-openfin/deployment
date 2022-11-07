@@ -6,13 +6,10 @@
 &nbsp;&nbsp;&nbsp;&nbsp;runtimeVersions *(static file containing hosted runtimes)*  
 &nbsp;&nbsp;&nbsp;&nbsp;/rvm  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;latestVersion *(static file containing latest RVM Version)*  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;latest *(latest RVM)*  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;latest *(latest RVM - 8.1.0.4)*  
 &nbsp;&nbsp;&nbsp;&nbsp;/runtime  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.53.23.23 *(runtime)*  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8.56.24.41  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8.56.26.40  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stable *(static file containing corresponding runtime version)*  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;beta  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;27.104.71.17 *(runtime)*  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;27.104.71.21 *(static file containing corresponding runtime version)*  
 
 This is the structure of the `public` directory, which mirrors the OpenFin [CDN](http://cdn.openfin.co/versions/).
 
