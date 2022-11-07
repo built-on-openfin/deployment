@@ -38,7 +38,7 @@ Example DOS:
 
 
     "desktopSettings": {
-        "assetsUrl": "http://localhost:8000/",
+        "assetsUrl": "http://localhost:5555/",
 
 ## Demo
 
