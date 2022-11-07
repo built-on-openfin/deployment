@@ -27,7 +27,7 @@ To deploy your own, simply copy the public directory (or its structure) and host
 
 ## Step 2: Point To Your Assets
 
-`Please set a DOS file in your registry to point to a assetsUrl` - https://developers.openfin.co/of-docs/docs/desktop-owner-settings  
+`Set a desktop owner settings file in your registry to point to a assetsUrl` - https://developers.openfin.co/of-docs/docs/desktop-owner-settings  
 `Path: HKEY_LOCAL_MACHINE\Software\OpenFin\RVM\Settings\`  
 `Type: REG_SZ (String value)`  
 `Name: DesktopOwnerSettings`  
