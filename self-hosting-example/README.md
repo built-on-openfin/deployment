@@ -3,16 +3,12 @@
 ### Directory Structure
 
 /  
-&nbsp;&nbsp;&nbsp;&nbsp;runtimeVersions *(static file containing hosted runtimes)*  
 &nbsp;&nbsp;&nbsp;&nbsp;/rvm  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;latestVersion *(static file containing latest RVM Version)*  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;latest *(latest RVM)*  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;latest *(latest RVM - 8.1.0.4)*  
 &nbsp;&nbsp;&nbsp;&nbsp;/runtime  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.53.23.23 *(runtime)*  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8.56.24.41  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8.56.26.40  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stable *(static file containing corresponding runtime version)*  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;beta  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;27.104.71.17 *(runtime)*  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;27.104.71.21 *(static file containing corresponding runtime version)*  
 
 This is the structure of the `public` directory, which mirrors the OpenFin [CDN](http://cdn.openfin.co/versions/).
 
@@ -31,13 +27,17 @@ To deploy your own, simply copy the public directory (or its structure) and host
 
 ## Step 2: Point To Your Assets
 
-Overwrite all applications in the Window registry  
-`HKEY_CURRENT_USER -> SOFTWARE -> OpenFin -> RVM -> Settings`  
-`Name: assetsUrl`  
-`Type: REG_SZ`  
-`Data: http://assetServerUrl`
+`Set a desktop owner settings file in your registry to point to a assetsUrl` - https://developers.openfin.co/of-docs/docs/desktop-owner-settings  
+`Path: HKEY_LOCAL_MACHINE\Software\OpenFin\RVM\Settings\`  
+`Type: REG_SZ (String value)`  
+`Name: DesktopOwnerSettings`  
+`Data: https://example.com/company/files/end-user-desktop-owner-settings.json`
 
-Where http://assetServerUrl is the url of your hosted assets e.g. http://localhost:5555/ for this sample.
+Example DOS: 
+
+
+    "desktopSettings": {
+        "assetsUrl": "http://localhost:5555/",
 
 ## Demo
 

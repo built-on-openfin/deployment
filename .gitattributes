@@ -1,0 +1,2 @@
+'self-hosting-example/public/runtime/' filter=lfs diff=lfs merge=lfs -text
+'self-hosting-example/public/runtime/*' filter=lfs diff=lfs merge=lfs -text
