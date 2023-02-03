@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build-clean": "rimraf ./public/rvm ./public/runtime ./public/runtimeVersions",
+    "build": "node ./scripts/download-assets.js",
     "launch": "start http://localhost:5555/launch"
   },
   "keywords": [],
@@ -11,6 +13,11 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "node-fetch": "2.6.7",
+    "rimraf": "4.1.2",
+    "yargs": "^17.6.2"
   },
   "repository": {
     "type": "git",
