@@ -35,7 +35,7 @@ const isRuntimeVersion = (value) => {
     return  /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/.test(value);
 }
 
-const downloadRuntime = async(versions) => {
+const downloadRuntime = async(versions, updateManifest) => {
     const runtimeFolder = path.join( __dirname, '..', 'public', 'runtime');
     fs.mkdirSync(runtimeFolder, { recursive: true });
 
@@ -67,7 +67,10 @@ const downloadRuntime = async(versions) => {
                 fs.writeFileSync(runtimePath, runtimeBuffer);            
                 const versionListPath = path.join('./public', 'runtimeVersions');
                 fs.writeFileSync(versionListPath, numericVersion, { flag: 'a+' } );
-                fs.writeFileSync(versionListPath, '\n', { flag: 'a+' } );            
+                fs.writeFileSync(versionListPath, '\n', { flag: 'a+' } );
+                if (updateManifest) {
+                    updateAppManifest(numericVersion);
+                }
             } else {
                 console.error(`error downloading ${numericVersion}`)
             }
@@ -75,13 +78,23 @@ const downloadRuntime = async(versions) => {
     }
 }
 
+const updateAppManifest = (numericVersion) => {
+    const appJsonTemplateStr = fs.readFileSync(path.join( __dirname, '..', 'app-template.json'));
+    const appJsonTemplate = JSON.parse(appJsonTemplateStr);
+    appJsonTemplate.runtime.version = numericVersion;
+
+    const appJsonPath = path.join( __dirname, '..', 'public', 'app.json');
+    console.log(`creating ${appJsonPath} with Runtime version ${numericVersion}`)
+    fs.writeFileSync(appJsonPath, JSON.stringify(appJsonTemplate, null, 3));
+}
+
 const download = async() => {
     const argv = yargs(process.argv).argv;
     downloadRVM();
     if (argv.runtimes) {
-        downloadRuntime(argv.runtimes.split(','));
+        downloadRuntime(argv.runtimes.split(','), false);
     } else {
-        downloadRuntime(['stable']);
+        downloadRuntime(['stable'], true);
     }
 }
 
