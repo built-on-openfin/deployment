@@ -38,7 +38,6 @@ const isRuntimeVersion = (value) => {
 const downloadRuntime = async(versions, updateManifest) => {
     const runtimeFolder = path.join( __dirname, '..', 'public', 'runtime');
     fs.mkdirSync(runtimeFolder, { recursive: true });
-
     for (let version of versions) {
         let numericVersion;
         if (!isRuntimeVersion(version)) {  // must be a release channel
@@ -61,22 +60,34 @@ const downloadRuntime = async(versions, updateManifest) => {
         if (numericVersion) {
             console.log(`downloading version ${numericVersion} of Runtime`);
             const runtimePath = path.join(runtimeFolder, numericVersion);
-            const runtimeResponse = await fetch(`${RUNTIME_BASE_URL}/${numericVersion}`);
-            if (runtimeResponse.ok) {
-                const runtimeBuffer = await runtimeResponse.buffer();
-                fs.writeFileSync(runtimePath, runtimeBuffer);            
+            if (downloadAsset(runtimePath, `${RUNTIME_BASE_URL}/${numericVersion}`)) {
                 const versionListPath = path.join('./public', 'runtimeVersions');
                 fs.writeFileSync(versionListPath, numericVersion, { flag: 'a+' } );
                 fs.writeFileSync(versionListPath, '\n', { flag: 'a+' } );
                 if (updateManifest) {
                     updateAppManifest(numericVersion);
                 }
-            } else {
-                console.error(`error downloading ${numericVersion}`)
+                const runtimeFolder64 = path.join( __dirname, '..', 'public', 'runtime', 'x64');
+                fs.mkdirSync(runtimeFolder64, { recursive: true });            
+                downloadAsset(path.join(runtimeFolder64, numericVersion), `${RUNTIME_BASE_URL}/x64/${numericVersion}`)
             }
         }
     }
 }
+
+const downloadAsset = async (savePath, url) => {
+    console.log(`downloading ${url}`);
+    const runtimeResponse = await fetch(url);
+    if (runtimeResponse.ok) {
+        const runtimeBuffer = await runtimeResponse.buffer();
+        fs.writeFileSync(savePath, runtimeBuffer);
+        return true;
+    } else {
+        console.error(`error downloading ${numericVersion}`)
+        return false;
+    }
+}
+
 
 const updateAppManifest = (numericVersion) => {
     const appJsonTemplateStr = fs.readFileSync(path.join( __dirname, '..', 'app-template.json'));
