@@ -2,25 +2,9 @@
 
 This example has been created to demonstrate how an internal CDN will work. Please note that for this demo you will need access to the OpenFin CDN to pull down the latest runtime. If you are completely offline and or cannot download from the OpenFin CDN please reach out to **deployment@openfin.co** and we will provide you with the runtime offline.
 
-## Step 1: Host Your Assets
+>  Please note a minimum of node.js version 12 is required to run this example
 
-To host this sample project:
-
-Please navigate to self-hosting-example folder via command line
-
-*The directory created when **npm run build** is executed is the structure of the `public` directory, which mirrors the OpenFin [CDN](http://cdn.openfin.co/versions/).*
-
-```
-npm install
-npm run build
-npm start
-```
-
-This will launch a webserver (on port 5555 or PORT environment variable).
-
-To deploy your own, simply copy the public directory (or its structure) and host it with the web server of your choice.
-
-## Step 2: Point To Your Assets
+## Step 1: Set your assets location
 
 We recommend using Desktop Owner Settings to point to your assets. Desktop owner settings are global settings that control aspects of the OpenFin environment on an individual computer or device.
 
@@ -44,6 +28,24 @@ Registry entry:
 `String Value: DesktopOwnerSettings`    
 `Value Data: https://example.com/company/files/end-user-desktop-owner-settings.json`
 
+
+## Step 2: Host Your Assets
+
+To host this sample project:
+
+Please navigate to self-hosting-example folder via command line
+
+*The directory created when **npm run build** is executed, is the structure of the `public` directory, which mirrors the OpenFin [CDN](http://cdn.openfin.co/versions/).*
+
+```
+npm install
+npm run build
+npm start
+```
+
+This will launch a webserver (on port 5555 or PORT environment variable).
+
+To deploy your own, simply copy the public directory (or its structure) and host it with the web server of your choice.
 
 
 ## Demo
