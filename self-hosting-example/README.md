@@ -1,27 +1,45 @@
 # Internal Hosting
 
-### Directory Structure
+This example has been created to demonstrate how an internal CDN will work. Please note that for this demo you will need access to the OpenFin CDN to pull down the latest runtime. If you are completely offline and or cannot download from the OpenFin CDN please reach out to **deployment@openfin.co** and we will provide you with the runtime offline.
 
-/  
-&nbsp;&nbsp;&nbsp;&nbsp;runtimeVersions *(static file containing hosted runtimes)*  
-&nbsp;&nbsp;&nbsp;&nbsp;/rvm  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;latestVersion *(static file containing latest RVM Version)*  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;latest *(latest RVM)*  
-&nbsp;&nbsp;&nbsp;&nbsp;/runtime  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.53.23.23 *(runtime)*  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8.56.24.41  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8.56.26.40  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stable *(static file containing corresponding runtime version)*  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;beta  
+>  Please note a minimum of node.js version 12 is required to run this example
 
-This is the structure of the `public` directory, which mirrors the OpenFin [CDN](http://cdn.openfin.co/versions/).
+## Step 1: Set your assets location
 
-## Step 1: Host Your Assets
+We recommend using Desktop Owner Settings to point to your assets. Desktop owner settings are global settings that control aspects of the OpenFin environment on an individual computer or device.
+
+More information here: https://developers.openfin.co/of-docs/docs/desktop-owner-settings
+
+Please set a assetsUrl in DOS where http://assetServerUrl is the url of your hosted assets e.g. http://localhost:5555/ for this sample.
+
+### **assetsUrl for self hosting example**
+
+```
+{
+    "desktopSettings": {
+        "assetsUrl": "http://localhost:5555/"
+   }
+                }
+```
+
+Registry entry:
+
+`Path: HKEY_CURRENT_USER\SOFTWARE\OpenFin\RVM\Settings`  
+`String Value: DesktopOwnerSettings`    
+`Value Data: https://example.com/company/files/end-user-desktop-owner-settings.json`
+
+
+## Step 2: Host Your Assets
 
 To host this sample project:
 
-```bash
+Please navigate to self-hosting-example folder via command line
+
+*The directory created when **npm run build** is executed, is the structure of the `public` directory, which mirrors the OpenFin [CDN](http://cdn.openfin.co/versions/).*
+
+```
 npm install
+npm run build
 npm start
 ```
 
@@ -29,19 +47,10 @@ This will launch a webserver (on port 5555 or PORT environment variable).
 
 To deploy your own, simply copy the public directory (or its structure) and host it with the web server of your choice.
 
-## Step 2: Point To Your Assets
-
-Overwrite all applications in the Window registry  
-`HKEY_CURRENT_USER -> SOFTWARE -> OpenFin -> RVM -> Settings`  
-`Name: assetsUrl`  
-`Type: REG_SZ`  
-`Data: http://assetServerUrl`
-
-Where http://assetServerUrl is the url of your hosted assets e.g. http://localhost:5555/ for this sample.
 
 ## Demo
 
-This repository includes a sample app which targets a custom version which is fetched from the custom asset location.
+A sample app will be created in this repository which targets a custom version which is fetched from the custom asset location.
 
 To launch the sample application load the launch page in the browser using the command below and then click on the fins link to launch the application:
 
