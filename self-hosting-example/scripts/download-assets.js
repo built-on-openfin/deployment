@@ -35,6 +35,26 @@ const isRuntimeVersion = (value) => {
     return  /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/.test(value);
 }
 
+// Sanitize input to prevent path traversal attacks
+const sanitizePathInput = (input) => {
+    if (!input || typeof input !== 'string') {
+        throw new Error('Invalid input: must be a non-empty string');
+    }
+    
+    // Remove any path traversal sequences and normalize the path
+    const sanitized = input
+        .replace(/\.\./g, '') // Remove .. sequences
+        .replace(/[\/\\]/g, '') // Remove path separators
+        .replace(/[^a-zA-Z0-9\-_]/g, '') // Only allow alphanumeric, hyphens, and underscores
+        .trim();
+    
+    if (!sanitized) {
+        throw new Error('Invalid input: contains only invalid characters');
+    }
+    
+    return sanitized;
+}
+
 const downloadRuntime = async(versions, updateManifest) => {
     const runtimeFolder = path.join( __dirname, '..', 'public', 'runtime');
     fs.mkdirSync(runtimeFolder, { recursive: true });
@@ -47,7 +67,8 @@ const downloadRuntime = async(versions, updateManifest) => {
                 if (isRuntimeVersion(mappedVersion)) {
                     numericVersion = mappedVersion;
                     console.log(`release channel ${version} of Runtime: ${numericVersion}`);
-                    const channelPath = path.join(runtimeFolder, version);
+                    const sanitizedVersion = sanitizePathInput(version);
+                    const channelPath = path.join(runtimeFolder, sanitizedVersion);
                     fs.writeFileSync(channelPath, numericVersion);
                 }
             } else {
@@ -59,7 +80,8 @@ const downloadRuntime = async(versions, updateManifest) => {
 
         if (numericVersion) {
             console.log(`downloading version ${numericVersion} of Runtime`);
-            const runtimePath = path.join(runtimeFolder, numericVersion);
+            const sanitizedNumericVersion = sanitizePathInput(numericVersion);
+            const runtimePath = path.join(runtimeFolder, sanitizedNumericVersion);
             if (downloadAsset(runtimePath, `${RUNTIME_BASE_URL}/${numericVersion}`)) {
                 const versionListPath = path.join('./public', 'runtimeVersions');
                 fs.writeFileSync(versionListPath, numericVersion, { flag: 'a+' } );
@@ -69,7 +91,7 @@ const downloadRuntime = async(versions, updateManifest) => {
                 }
                 const runtimeFolder64 = path.join( __dirname, '..', 'public', 'runtime', 'x64');
                 fs.mkdirSync(runtimeFolder64, { recursive: true });            
-                downloadAsset(path.join(runtimeFolder64, numericVersion), `${RUNTIME_BASE_URL}/x64/${numericVersion}`)
+                downloadAsset(path.join(runtimeFolder64, sanitizedNumericVersion), `${RUNTIME_BASE_URL}/x64/${numericVersion}`)
             }
         }
     }

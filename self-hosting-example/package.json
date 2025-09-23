@@ -12,7 +12,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "express-rate-limit": "^7.1.5"
   },
   "devDependencies": {
     "node-fetch": "2.6.7",
