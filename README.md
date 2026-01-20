@@ -1,7 +1,7 @@
 # Deployment
-Interested in examples about OpenFin Deployment? Then this is the repo for you. 
+Interested in examples about HERE Deployment? Then this is the repo for you. 
 
-Below you will find a list of examples that will help you learn OpenFin Deployment approaches.
+Below you will find a list of examples that will help you learn HERE Deployment approaches.
 
 ## [Self-hosting Example](self-hosting-example/README.md)
 
@@ -10,5 +10,5 @@ the RVM's registry settings.
 
 ## [Health-check Example](deployment-health-check/README.md)
 
-A sample page to show health of some webservices deployed at OpenFin with [@openfin/deployment](https://www.npmjs.com/package/@openfin/deployment) package.
+A sample page to show health of some webservices deployed at HERE with [@openfin/deployment](https://www.npmjs.com/package/@openfin/deployment) package.
 
