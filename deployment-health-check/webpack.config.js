@@ -23,7 +23,7 @@ module.exports = {
     },
     plugins: [
         new HtmlwebpackPlugin({
-            title: 'OpenFin Deployment Example',
+            title: 'HERE Deployment Example',
             template: 'example.html',
             chunks: ['example'],
             filename: 'example.html'

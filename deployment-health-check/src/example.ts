@@ -31,9 +31,9 @@ window.addEventListener("DOMContentLoaded",  async () => {
     // check should fail for the following endpoint because of CORS policy
     const customEndpoints:Endpoint[] = [
         {
-            id: 'OpenFin Website',
-            url: 'https://openfin.co',
-            displayName: 'OpenFin Website'
+            id: 'HERE Website',
+            url: 'https://here.io',
+            displayName: 'HERE Website'
         }
     ];
     const customResult = await checkEndpoints([], customEndpoints);

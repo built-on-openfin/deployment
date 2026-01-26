@@ -1,14 +1,14 @@
 # Internal Hosting
 
-This example has been created to demonstrate how an internal CDN will work. Please note that for this demo you will need access to the OpenFin CDN to pull down the latest runtime. If you are completely offline and or cannot download from the OpenFin CDN please reach out to **deployment@openfin.co** and we will provide you with the runtime offline.
+This example has been created to demonstrate how an internal CDN will work. Please note that for this demo you will need access to the HERE CDN to pull down the latest runtime. If you are completely offline and or cannot download from the HERE CDN please reach out to **deployment@here.io** and we will provide you with the runtime offline.
 
 >  Please note a minimum of node.js version 12 is required to run this example
 
 ## Step 1: Set your assets location
 
-We recommend using Desktop Owner Settings to point to your assets. Desktop owner settings are global settings that control aspects of the OpenFin environment on an individual computer or device.
+We recommend using Desktop Owner Settings to point to your assets. Desktop owner settings are global settings that control aspects of the HERE environment on an individual computer or device.
 
-More information here: https://developers.openfin.co/of-docs/docs/desktop-owner-settings
+More information here: https://resources.here.io/docs/core/manage/desktops/dos/
 
 Please set a assetsUrl in DOS where http://assetServerUrl is the url of your hosted assets e.g. http://localhost:5555/ for this sample.
 
@@ -35,7 +35,7 @@ To host this sample project:
 
 Please navigate to self-hosting-example folder via command line
 
-*The directory created when **npm run build** is executed, is the structure of the `public` directory, which mirrors the OpenFin [CDN](http://cdn.openfin.co/versions/).*
+*The directory created when **npm run build** is executed, is the structure of the `public` directory, which mirrors the HERE [CDN](http://cdn.openfin.co/versions/).*
 
 ```
 npm install
@@ -58,19 +58,16 @@ To launch the sample application load the launch page in the browser using the c
 npm run launch
 ```
 
-The application dynamically populates a div with its current OpenFin version, as a number.
+The application dynamically populates a div with its current HERE Core version, as a number.
 
-Read more about this on our [website](https://openfin.co/hosting-runtime-rvm-assets/)
+Read more about this on our [website](https://resources.here.io/docs/core/manage/desktops/host-assets/#rvm-assets-server-setup)
 
 ## License
 MIT
 
 The code in this repository is covered by the included license.
 
-However, if you run this code, it may call on the OpenFin RVM or OpenFin Runtime, which are covered by OpenFin’s Developer, Community, and Enterprise licenses. You can learn more about OpenFin licensing at the links listed below or just email us at support@openfin.co with questions.
-
-https://openfin.co/developer-agreement/ <br/>
-https://openfin.co/licensing/
+However, if you run this code, it may call on the HERE RVM or HERE Runtime, which are covered by HERE's Developer, Community, and Enterprise licenses. You can learn more about HERE licensing at the links listed below or just email us at support@here.io with questions.
 
 ## Support
-Please enter an issue in the repo for any questions or problems. Alternatively, please contact us at support@openfin.co 
+Please enter an issue in the repo for any questions or problems. Alternatively, please contact us at support@here.io 
