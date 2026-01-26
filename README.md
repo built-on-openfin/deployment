@@ -1,5 +1,7 @@
+![Deployment](./HERO-STARTER-DEPLOYMENT.png)
+
 # Deployment
-Interested in examples about HERE Deployment? Then this is the repo for you. 
+Interested in examples about HERE Deployment? Then this is the repo for you.
 
 Below you will find a list of examples that will help you learn HERE Deployment approaches.
 
