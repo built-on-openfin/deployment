@@ -19,7 +19,7 @@ Please set a assetsUrl in DOS where http://assetServerUrl is the url of your hos
     "desktopSettings": {
         "assetsUrl": "http://localhost:5555/"
    }
-                }
+}
 ```
 
 Registry entry:
