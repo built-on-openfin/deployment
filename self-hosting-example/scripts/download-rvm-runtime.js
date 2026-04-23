@@ -7,13 +7,10 @@ const yargs = require('yargs/yargs');
 const RVM_BASE_URL = 'https://cdn.openfin.co/release/rvm';
 const RUNTIME_BASE_URL = 'https://cdn.openfin.co/release/runtime';
 
-// ---------- helpers ----------
-
 const isRuntimeVersion = (value) =>
     /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/.test(value);
 
 // Sanitize a single path segment to prevent traversal.
-// Allows alphanumerics, dots (for version strings), hyphens, and underscores.
 const sanitizePathInput = (input) => {
     if (!input || typeof input !== 'string') {
         throw new Error('Invalid input: must be a non-empty string');
@@ -58,8 +55,6 @@ const joinLocal = (base, subpath, ...rest) => {
     return path.join(base, ...parts, ...rest);
 };
 
-// ---------- download primitives ----------
-
 const downloadAsset = async (savePath, url) => {
     console.log(`downloading ${url}`);
     const response = await fetch(url);
@@ -86,8 +81,6 @@ const resolveChannelVersion = async (channel) => {
     return version;
 };
 
-// ---------- RVM ----------
-
 const downloadRVM = async (systemInfo) => {
     console.log(`Downloading RVM for ${systemInfo.platform}/${systemInfo.architecture}`);
 
@@ -103,7 +96,6 @@ const downloadRVM = async (systemInfo) => {
     const latestVersion = (await latestResponse.text()).trim();
     console.log(`The latest version of RVM is: ${latestVersion}`);
 
-    // Record the channel file locally
     fs.writeFileSync(path.join(rvmFolder, 'latestVersion'), latestVersion);
 
     const subpath = getRvmSubpath(systemInfo);
@@ -113,14 +105,13 @@ const downloadRVM = async (systemInfo) => {
     await downloadAsset(savePath, url);
 };
 
-// ---------- Runtime ----------
 
 const downloadRuntime = async (systemInfo, versions, updateManifest) => {
     console.log(`Downloading Runtime versions ${versions} for ${systemInfo.platform}/${systemInfo.architecture}`);
 
     const subpath = getRuntimeSubpath(systemInfo);
     const baseFolder = path.join(__dirname, '..', 'public', 'runtime');
-    // Local tree mirrors the URL: public/runtime[/mac][/arch]
+
     const targetFolder = joinLocal(baseFolder, subpath);
     fs.mkdirSync(targetFolder, { recursive: true });
 
@@ -156,8 +147,6 @@ const downloadRuntime = async (systemInfo, versions, updateManifest) => {
     }
 };
 
-// ---------- App manifest ----------
-
 const updateAppManifest = (numericVersion) => {
     const templatePath = path.join(__dirname, '..', 'app-template.json');
     const template = JSON.parse(fs.readFileSync(templatePath, 'utf8'));
@@ -167,8 +156,6 @@ const updateAppManifest = (numericVersion) => {
     console.log(`creating ${appJsonPath} with Runtime version ${numericVersion}`);
     fs.writeFileSync(appJsonPath, JSON.stringify(template, null, 3));
 };
-
-// ---------- entry point ----------
 
 const download = async () => {
     const argv = yargs(process.argv).argv;
@@ -180,9 +167,8 @@ const download = async () => {
     console.log(`System information: ${JSON.stringify(systemInfo)}`);
 
     const versions = argv.runtimes ? argv.runtimes.split(',') : ['stable'];
-    const updateManifest = !argv.runtimes; // only update manifest on default stable pull
+    const updateManifest = !argv.runtimes; 
 
-    // Run RVM and Runtime downloads in parallel — they're independent.
     await Promise.all([
         downloadRVM(systemInfo),
         downloadRuntime(systemInfo, versions, updateManifest),
