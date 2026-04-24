@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build-clean": "rimraf ./public/rvm ./public/runtime ./public/runtimeVersions ./public/app.json",
-    "build": "node ./scripts/download-assets.js",
+    "build": "node ./scripts/download-rvm-runtime.js",
     "launch": "start http://localhost:5555/launch"
   },
   "keywords": [],
