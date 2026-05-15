@@ -11,6 +11,8 @@
     "arguments": "",
     "version": "14.78.48.16"
   },
+  "appAssets": [
+	],
   "shortcut": {
     "company": "HERE",
     "description": "HERE POC",
