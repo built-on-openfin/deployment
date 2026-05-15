@@ -39,6 +39,7 @@ Please navigate to self-hosting-example folder via command line
 
 ```
 npm install
+npm run build-clean
 npm run build
 npm start
 ```
@@ -47,6 +48,45 @@ This will launch a webserver (on port 5555 or PORT environment variable).
 
 To deploy your own, simply copy the public directory (or its structure) and host it with the web server of your choice.
 
+By default we will generate an app.json with the stable version of the runtime (that was just downloaded) referenced.
+
+## Step 3 - Downloading specific versions
+
+Download specific versions of the runtime and Snap.
+
+By default running npm run build will download the latest version of the RVM and the stable version of the runtime.
+
+Before running these commands you may want to clear out the public directory by running:
+
+```
+npm run build-clean   
+```
+
+If you want to see an example of downloading a specific version of a runtime and Snap SDK you can run:
+
+```
+npm run build-with-version   
+```
+
+This downloads runtime 44.146.101.1 and Snap 1.6.0 and generates a manifest with a snap app asset entry and the runtime entry updated.
+
+If you want to specify your own versions via the command line you can run the following command (, to specify multiple versions for runtime and/or snap). If you also want a manifest generated add --manifest=true to the arguments.
+
+```
+node ./scripts/download-rvm-runtime.js --runtimes=43.142.102.2,44.146.101.1 --snapSDKs=1.5.0,1.6.0 
+```
+
+## Exiting 32bit RVM installation
+
+If going from a 32bit RVM for example RVM 15 32Bit going to RVM 16 64Bit you must update the files in:
+
+- **rvm/latestVersion - extensionless .txt file**
+- **rvm/latest - extensionless rvm.zip**
+
+Once you are on a 64bit version you will need to update the path to conform to the same as our CDN i.e. RVM 16 64bit to RVM 19 64bit
+
+- **rvm/x64/latestVersion**
+- **rvm/x64/latest**
 
 ## Demo
 

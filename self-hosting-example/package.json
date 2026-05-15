@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build-clean": "rimraf ./public/rvm ./public/runtime ./public/runtimeVersions ./public/app.json",
-    "build": "node ./scripts/download-rvm-runtime.js",
+    "build-clean": "rimraf ./public/rvm ./public/runtime ./public/app.json ./public/snap",
+    "build": "node ./scripts/download-rvm-runtime.js --manifest=true",
+    "build-with-version": "node ./scripts/download-rvm-runtime.js --runtimes=44.146.101.1 --snapSDKs=1.6.0 --manifest=true",
     "launch": "start http://localhost:5555/launch"
   },
   "keywords": [],
