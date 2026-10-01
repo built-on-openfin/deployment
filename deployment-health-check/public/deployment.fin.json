@@ -1,0 +1,23 @@
+{
+	"startup_app": {
+		"name": "HERE Deployment Health Check",
+		"description": "Checks whether this desktop can reach HERE services and launch a HERE based application.",
+		"url": "http://localhost:6060/index.html",
+		"uuid": "here-deployment-health-check",
+		"autoShow": true,
+		"defaultWidth": 1280,
+		"defaultHeight": 1100,
+		"resizable": true
+	},
+	"licenseKey": "openfin-demo-license-key",
+	"runtime": {
+		"arguments": "",
+		"version": "stable"
+	},
+	"shortcut": {
+		"company": "HERE",
+		"description": "HERE Deployment Health Check",
+		"icon": "https://22210168.fs1.hubspotusercontent-na1.net/hub/22210168/hubfs/here-favicon-1.ico?width=108&height=108",
+		"name": "HERE Deployment Health Check"
+	}
+}

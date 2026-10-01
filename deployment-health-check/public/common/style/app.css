@@ -1,0 +1,295 @@
+:root {
+	--font-family: Inter, Arial, 'Helvetica Neue', sans-serif;
+
+	/* HERE brand palette, taken from the HERE Deployment starter artwork. */
+	--color-blush: #ffd7d2;
+	--color-plum: #641e55;
+	--color-plum-hover: #4d1642;
+
+	--color-bg: var(--color-blush);
+	--color-text: var(--color-plum);
+	--color-text-muted: rgba(100, 30, 85, 0.62);
+	--color-surface: #fff8f7;
+	--color-surface-hover: #fffdfd;
+	--color-border: rgba(100, 30, 85, 0.16);
+
+	--color-good: #1a7f5a;
+	--color-bad: #c4314b;
+	--color-unknown: rgba(100, 30, 85, 0.28);
+
+	--radius-card: 18px;
+	--radius-pill: 999px;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+[hidden] {
+	display: none !important;
+}
+
+body {
+	background: var(--color-bg);
+	color: var(--color-text);
+	font-family: var(--font-family);
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 1.45;
+	margin: 0;
+	padding: 48px 24px 64px;
+	-webkit-font-smoothing: antialiased;
+}
+
+.page {
+	width: 100%;
+	max-width: 880px;
+	margin: 0 auto;
+}
+
+/* Masthead ---------------------------------------------------------------- */
+
+.masthead {
+	display: flex;
+	align-items: center;
+	gap: 24px;
+	margin-bottom: 40px;
+}
+
+.masthead-logo {
+	width: 76px;
+	height: 76px;
+	flex: none;
+}
+
+.masthead-divider {
+	width: 1px;
+	align-self: stretch;
+	background: var(--color-plum);
+	opacity: 0.5;
+}
+
+.masthead-title {
+	margin: 0;
+	font-size: 30px;
+	font-weight: 600;
+	line-height: 1.1;
+	letter-spacing: -0.01em;
+}
+
+.masthead-title span {
+	display: block;
+}
+
+.masthead-subtitle {
+	margin: 8px 0 0;
+	font-size: 15px;
+	color: var(--color-text-muted);
+}
+
+/* Cards ------------------------------------------------------------------- */
+
+.card {
+	background: var(--color-surface);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-card);
+	padding: 28px;
+	margin-bottom: 24px;
+}
+
+.card-header {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 16px;
+	margin-bottom: 20px;
+}
+
+.card-header h2 {
+	margin: 0;
+	font-size: 19px;
+	font-weight: 600;
+}
+
+.card-summary {
+	font-size: 14px;
+	color: var(--color-text-muted);
+}
+
+/* Status lists ------------------------------------------------------------ */
+
+ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.status-list li,
+.info-list li {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	padding: 12px 0;
+	border-bottom: 1px solid var(--color-border);
+}
+
+.status-list li:last-child,
+.info-list li:last-child {
+	border-bottom: none;
+}
+
+.led {
+	flex: none;
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+	background: var(--color-unknown);
+}
+
+.good .led {
+	background: var(--color-good);
+}
+
+.bad .led {
+	background: var(--color-bad);
+}
+
+.status-name {
+	flex: 1;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.status-detail {
+	flex: none;
+	font-size: 13px;
+	color: var(--color-text-muted);
+	font-variant-numeric: tabular-nums;
+}
+
+.info-list .status-name {
+	font-weight: 400;
+}
+
+.info-list .status-detail {
+	font-weight: 600;
+}
+
+/* Actions ----------------------------------------------------------------- */
+
+.actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin-top: 24px;
+}
+
+button {
+	font-family: inherit;
+	font-size: 15px;
+	font-weight: 600;
+	border-radius: var(--radius-pill);
+	padding: 12px 24px;
+	border: 1px solid var(--color-plum);
+	background: var(--color-plum);
+	color: var(--color-blush);
+	cursor: pointer;
+	transition:
+		background 0.15s ease,
+		color 0.15s ease,
+		opacity 0.15s ease;
+}
+
+button:hover {
+	background: var(--color-plum-hover);
+	border-color: var(--color-plum-hover);
+}
+
+button.secondary {
+	background: transparent;
+	color: var(--color-plum);
+}
+
+button.secondary:hover {
+	background: rgba(100, 30, 85, 0.08);
+	border-color: var(--color-plum);
+}
+
+button:disabled {
+	opacity: 0.5;
+	cursor: default;
+}
+
+button:focus-visible {
+	outline: 2px solid var(--color-plum);
+	outline-offset: 3px;
+}
+
+/* Resource cards ---------------------------------------------------------- */
+
+.resources {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 16px;
+}
+
+.resource {
+	display: block;
+	background: var(--color-surface);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-card);
+	padding: 22px;
+	text-decoration: none;
+	color: var(--color-text);
+	transition:
+		background 0.15s ease,
+		transform 0.15s ease;
+}
+
+.resource:hover {
+	background: var(--color-surface-hover);
+	transform: translateY(-2px);
+}
+
+.resource-title {
+	display: block;
+	font-size: 17px;
+	font-weight: 600;
+	margin-bottom: 6px;
+}
+
+.resource-description {
+	display: block;
+	font-size: 14px;
+	color: var(--color-text-muted);
+}
+
+@media (max-width: 720px) {
+	body {
+		padding: 32px 16px 48px;
+	}
+
+	.masthead {
+		gap: 16px;
+	}
+
+	.masthead-title {
+		font-size: 24px;
+	}
+
+	.card {
+		padding: 22px;
+	}
+
+	.card-header {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 4px;
+	}
+
+	.resources {
+		grid-template-columns: 1fr;
+	}
+}

@@ -1,0 +1,7 @@
+package-lock.json
+*.bundle.js
+settings.schema.json
+reports
+*.exe
+*.zip
+**/wc-fin/*.js
