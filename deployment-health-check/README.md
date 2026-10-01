@@ -6,7 +6,7 @@
 
 A sample page that shows the health of the webservices deployed at HERE, using the [@openfin/deployment](https://www.npmjs.com/package/@openfin/deployment) package.
 
-[Live Launch Example](https://cdn.openfin.co/health/deployment/index.html)
+[Live Launch Example](https://cdn.openfin.co/health/check/index.html)
 
 ![HERE Deployment Health Check](./docs/deployment-health-check.png)
 
