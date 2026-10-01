@@ -88,6 +88,11 @@ interface HereSystem {
 	getHostSpecs?: () => Promise<{ name?: string }>;
 
 	/**
+	 * The runtime versions already installed on this desktop.
+	 */
+	getInstalledRuntimes?: () => Promise<string[]>;
+
+	/**
 	 * The version of the HERE runtime this page is running in.
 	 */
 	getVersion?: () => Promise<string>;
@@ -525,6 +530,21 @@ async function readRuntimeVersion(url: string): Promise<string | undefined> {
 }
 
 /**
+ * Check whether a runtime version is already installed. downloadRuntime throws for a version
+ * that is already present.
+ * @param version The exact runtime version.
+ * @returns True if installed, false if not, or undefined if the installed list is unavailable.
+ */
+async function isRuntimeInstalled(version: string): Promise<boolean | undefined> {
+	try {
+		const installed = await hereSystem()?.getInstalledRuntimes?.();
+		return installed ? installed.includes(version) : undefined;
+	} catch {
+		return undefined;
+	}
+}
+
+/**
  * Show the runtime section, but only when running inside HERE against an Enterprise Browser
  * instance whose manifest was reachable. The runtime the instance pins is read from that
  * manifest so that it can be downloaded on request.
@@ -580,6 +600,13 @@ async function runRuntimeCheck(): Promise<void> {
 		return;
 	}
 
+	if (await isRuntimeInstalled(version)) {
+		setStatus(downloadItem, true, "Already installed");
+		downloadActions.hidden = true;
+		summary.textContent = `Runtime ${version} is already installed`;
+		return;
+	}
+
 	setStatus(downloadItem, false, "Not attempted");
 	summary.textContent = `Manifest pins runtime ${version}`;
 	downloadButton.disabled = false;
@@ -611,6 +638,7 @@ async function downloadPinnedRuntime(): Promise<void> {
 		});
 
 		setStatus(downloadItem, true, "Yes");
+		requireElement("runtimeDownloadActions").hidden = true;
 		summary.textContent = `Runtime ${version} downloaded`;
 	} catch (error) {
 		const message = error instanceof Error ? error.message : String(error);

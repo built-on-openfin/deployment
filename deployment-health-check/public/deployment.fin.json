@@ -8,7 +8,13 @@
 		"autoShow": true,
 		"defaultWidth": 1280,
 		"defaultHeight": 1100,
-		"resizable": true
+		"resizable": true,
+		"permissions": {
+			"System": {
+						"downloadAsset": true
+					},
+			"webAPIs": ["clipboard-sanitized-write"]
+		}
 	},
 	"licenseKey": "openfin-demo-license-key",
 	"runtime": {
