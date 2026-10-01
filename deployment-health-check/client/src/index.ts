@@ -86,6 +86,16 @@ interface HereSystem {
 	 * Identify the operating system the container is running on.
 	 */
 	getHostSpecs?: () => Promise<{ name?: string }>;
+
+	/**
+	 * The version of the HERE runtime this page is running in.
+	 */
+	getVersion?: () => Promise<string>;
+
+	/**
+	 * The version of the HERE RVM that launched this runtime.
+	 */
+	getRvmInfo?: () => Promise<{ version?: string }>;
 }
 
 /**
@@ -612,14 +622,48 @@ async function downloadPinnedRuntime(): Promise<void> {
 }
 
 /**
- * Show whether this page is running in HERE and whether the HERE RVM was detected.
+ * Read the runtime and RVM versions from the fin API.
+ * @returns The versions, or "unknown" when an API is missing or fails.
+ */
+async function hereEnvironmentVersions(): Promise<{ runtime: string; rvm: string }> {
+	const system = hereSystem();
+	const unknown = "unknown";
+
+	try {
+		const [runtime, rvmInfo] = await Promise.all([system?.getVersion?.(), system?.getRvmInfo?.()]);
+
+		return {
+			runtime: runtime ?? unknown,
+			rvm: rvmInfo?.version ?? unknown
+		};
+	} catch {
+		return { runtime: unknown, rvm: unknown };
+	}
+}
+
+/**
+ * Show whether this page is running in HERE and, when it is not, whether the HERE RVM was
+ * detected. Inside a container the RVM row is hidden and the environment label includes
+ * the runtime and RVM versions.
  */
 async function runHereInfoChecks(): Promise<void> {
 	const environmentItem = requireElement("hereEnvironment");
+	const environmentName = environmentItem.querySelector(".status-name");
 	const rvmItem = requireElement("rvmDetected");
+	const launchButton = requireElement<HTMLButtonElement>("launch");
 
 	const inHere = isInHere();
 	setStatus(environmentItem, inHere, inHere ? "Yes" : "No");
+
+	rvmItem.hidden = inHere;
+	launchButton.hidden = inHere;
+	if (inHere) {
+		const { runtime, rvm } = await hereEnvironmentVersions();
+		if (environmentName) {
+			environmentName.textContent = `Running in a HERE Environment [Runtime: ${runtime}, RVM: ${rvm}]`;
+		}
+		return;
+	}
 
 	const finsProtocolResult = await checkForFinsProtocol();
 	const rvmDetected = finsProtocolResult.isFinsDetectionSupported && finsProtocolResult.isFinsSupported;
