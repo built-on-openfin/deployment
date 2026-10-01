@@ -12,7 +12,7 @@
 	},
 	"licenseKey": "openfin-demo-license-key",
 	"runtime": {
-		"arguments": "",
+		"arguments": "--enable-mesh --security-realm=deployment-health-check",
 		"version": "stable"
 	},
 	"shortcut": {
@@ -20,5 +20,11 @@
 		"description": "HERE Deployment Health Check",
 		"icon": "https://assets-here-staging.s3.us-east-2.amazonaws.com/images/here-favicon.ico",
 		"name": "HERE Deployment Health Check"
+	},
+	"supportInformation": {
+		"company": "HERE",
+		"product": "Deployment Health Check",
+		"email": "deployment@here.io",
+		"forwardErrorReports": true
 	}
 }
