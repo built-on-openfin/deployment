@@ -130,6 +130,7 @@ interface HereApplication {
 
 let endpointResults: EndpointStatus[] = [];
 let runtimeVersion: string | undefined;
+let ebManifest: { runtime?: { version?: string } } | undefined;
 
 /**
  * Check whether the page is running inside HERE.
@@ -359,11 +360,14 @@ function displayName(status: EndpointStatus): string {
 /**
  * Get the short detail to show for an endpoint. The package reports no status code of its own
  * for a failed request, using -1 when the browser blocked it by CORS and -2 when the request
- * could not be made at all.
+ * could not be made at all. A failed 2xx is an instance manifest that did not return JSON.
  * @param status The status returned for the endpoint.
  * @returns The detail to show.
  */
 function statusDetail(status: EndpointStatus): string {
+	if (!status.success && status.statusCode >= 200 && status.statusCode < 300) {
+		return "Not JSON";
+	}
 	if (status.statusCode > 0) {
 		return `${status.statusCode}`;
 	}
@@ -497,7 +501,11 @@ async function runEndpointChecks(): Promise<void> {
 
 	try {
 		const { exclude, custom } = endpointSelection();
-		endpointResults = await checkEndpoints(exclude, custom);
+		ebManifest = undefined;
+		const results = await checkEndpoints(exclude, custom);
+		endpointResults = await Promise.all(
+			results.map(async (status) => (status.url === custom[0]?.url ? verifyManifest(status) : status))
+		);
 		for (const status of endpointResults) {
 			addEndpointItem(list, status);
 		}
@@ -510,23 +518,43 @@ async function runEndpointChecks(): Promise<void> {
 }
 
 /**
- * Read the runtime version that an Enterprise Browser instance pins in its platform manifest.
- * @param url The manifest url.
- * @returns The version, or undefined if the manifest could not be read.
+ * Check that a reachable Enterprise Browser instance returned a JSON manifest. A proxy such as
+ * Zscaler can answer with an HTML block page and a success status, which is not reachable in
+ * any useful sense. A valid manifest is kept so the runtime check can read it.
+ * @param status The status returned for the instance manifest.
+ * @returns The status, marked as failed if the response was not a JSON object.
  */
-async function readRuntimeVersion(url: string): Promise<string | undefined> {
-	try {
-		const response = await fetch(url);
-		if (!response.ok) {
-			return undefined;
-		}
-
-		const manifest = (await response.json()) as { runtime?: { version?: string } };
-		return manifest.runtime?.version;
-	} catch {
-		// A manifest that cannot be read leaves the runtime section hidden.
-		return undefined;
+async function verifyManifest(status: EndpointStatus): Promise<EndpointStatus> {
+	if (!status.success) {
+		return status;
 	}
+
+	let contentType = "";
+	let parsed = false;
+	try {
+		const response = await fetch(status.url, { cache: "no-store" });
+		contentType = response.headers.get("content-type") ?? "";
+		const body: unknown = JSON.parse(await response.text());
+		parsed = true;
+		if (body && typeof body === "object" && !Array.isArray(body)) {
+			ebManifest = body as { runtime?: { version?: string } };
+			return status;
+		}
+	} catch {
+		// Anything that does not parse as JSON is reported below.
+	}
+
+	let received = contentType || "a response that is not JSON";
+	if (parsed) {
+		received = "JSON that is not a manifest object";
+	} else if (/html/i.test(contentType)) {
+		received = "an HTML page";
+	}
+	return {
+		...status,
+		success: false,
+		statusText: `Expected a JSON manifest but received ${received}. A proxy such as Zscaler may be blocking the request.`
+	};
 }
 
 /**
@@ -561,9 +589,8 @@ async function runRuntimeCheck(): Promise<void> {
 	card.hidden = true;
 
 	const manifestUrl = endpointSelection().custom[0]?.url;
-	const manifestReachable = endpointResults.some((status) => status.url === manifestUrl && status.success);
 
-	if (!hereSystem() || !manifestUrl || !manifestReachable) {
+	if (!hereSystem() || !manifestUrl || !ebManifest) {
 		return;
 	}
 
@@ -576,10 +603,7 @@ async function runRuntimeCheck(): Promise<void> {
 	if (!mac) {
 		setStatus(downloadItem, false, "Not attempted");
 	}
-	setStatus(versionItem, false, "Reading manifest\u2026");
-	summary.textContent = "Reading manifest\u2026";
-
-	const version = await readRuntimeVersion(manifestUrl);
+	const version = ebManifest.runtime?.version;
 
 	if (!version) {
 		setStatus(versionItem, false, "Not found", `No runtime version in ${manifestUrl}`);
