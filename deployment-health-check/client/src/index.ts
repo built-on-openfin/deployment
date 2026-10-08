@@ -260,8 +260,9 @@ function instanceManifest(value: string | null): { url: string; host: string } |
 	try {
 		const parsed = new URL(absolute);
 		const { hostname, href, pathname } = parsed;
-		// Require a dotted host and a path so a stray word does not become an endpoint to check.
-		if (!/^[\da-z]([\da-z-]*[\da-z])?(\.[\da-z]([\da-z-]*[\da-z])?)+$/i.test(hostname) || pathname === "/") {
+		// Require a dotted host (or localhost, for testing) and a path so a stray word does not become an endpoint to check.
+		const dottedHost = /^[\da-z]([\da-z-]*[\da-z])?(\.[\da-z]([\da-z-]*[\da-z])?)+$/i.test(hostname);
+		if ((!dottedHost && hostname !== "localhost") || pathname === "/") {
 			return undefined;
 		}
 
@@ -530,11 +531,13 @@ async function verifyManifest(status: EndpointStatus): Promise<EndpointStatus> {
 	}
 
 	let contentType = "";
+	let text = "";
 	let parsed = false;
 	try {
 		const response = await fetch(status.url, { cache: "no-store" });
 		contentType = response.headers.get("content-type") ?? "";
-		const body: unknown = JSON.parse(await response.text());
+		text = await response.text();
+		const body: unknown = JSON.parse(text);
 		parsed = true;
 		if (body && typeof body === "object" && !Array.isArray(body)) {
 			ebManifest = body as { runtime?: { version?: string } };
@@ -547,7 +550,7 @@ async function verifyManifest(status: EndpointStatus): Promise<EndpointStatus> {
 	let received = contentType || "a response that is not JSON";
 	if (parsed) {
 		received = "JSON that is not a manifest object";
-	} else if (/html/i.test(contentType)) {
+	} else if (/html/i.test(contentType) || text.trimStart().startsWith("<")) {
 		received = "an HTML page";
 	}
 	return {
